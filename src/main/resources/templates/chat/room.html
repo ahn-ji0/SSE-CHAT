@@ -9,6 +9,7 @@
 
     </ul>
   </div>
+  <button onclick="Chat_loadMore()">로드</button>
 </div>
 
 <script>
@@ -39,6 +40,7 @@
 </script>
 
 <script>
+  //채팅 메세지 작성
   function Chat_submitWriteMessageForm(form) {
     console.clear();
     console.log("실행됨");
@@ -65,5 +67,26 @@
 
     form.content.value = "";
     form.content.focus();
+  }
+
+  //채팅 메세지 읽어오기
+  let lastLoadedId = 0;
+
+  function Chat_loadMore(){
+    fetchGet("/chat/messages",{
+      fromId: lastLoadedId + 1
+    }).then((response) => Chat_showMessages(response.data.messages));
+  }
+
+  const messageContainer = document.querySelector('.chat__message-ul');
+
+  function Chat_showMessages(messages){
+    if(messages.length == 0)
+      return;
+    messages.forEach((message) => {
+      messageContainer.insertAdjacentHTML("afterbegin",
+        `<li> ${message.authorName} : ${message.content} </li>`);
+    });
+    lastLoadedId = messages[messages.length - 1].id;
   }
 </script>
