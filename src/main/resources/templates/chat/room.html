@@ -81,12 +81,15 @@
   const messageContainer = document.querySelector('.chat__message-ul');
 
   function Chat_showMessages(messages){
-    if(messages.length == 0)
-      return;
-    messages.forEach((message) => {
-      messageContainer.insertAdjacentHTML("afterbegin",
-        `<li> ${message.authorName} : ${message.content} </li>`);
-    });
-    lastLoadedId = messages[messages.length - 1].id;
+    if(messages.length > 0) {
+      messages.forEach((message) => {
+        messageContainer.insertAdjacentHTML("afterbegin",
+            `<li> ${message.authorName} : ${message.content} </li>`);
+      });
+      lastLoadedId = messages[messages.length - 1].id;
+    }
+    setTimeout(Chat_loadMore, 500);
   }
+
+  Chat_loadMore();
 </script>
