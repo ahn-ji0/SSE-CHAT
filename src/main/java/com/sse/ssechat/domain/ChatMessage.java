@@ -1,4 +1,4 @@
-package com.sse.ssechat;
+package com.sse.ssechat.domain;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,6 @@ public class ChatMessage {
     private String content;
 
     public ChatMessage(String authorName, String content){
-        this(1, LocalDateTime.now(), authorName, content);
+        this(ChatMessageIdGenerator.getNextId(), LocalDateTime.now(), authorName, content);
     }
 }
