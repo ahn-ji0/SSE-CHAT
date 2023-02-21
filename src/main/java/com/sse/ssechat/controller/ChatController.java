@@ -2,6 +2,7 @@ package com.sse.ssechat.controller;
 
 import com.sse.ssechat.domain.ChatMessage;
 import com.sse.ssechat.Response;
+import com.sse.ssechat.domain.MessageResponse;
 import com.sse.ssechat.domain.WriteMessageRequest;
 import com.sse.ssechat.domain.WriteMessageResponse;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class ChatController {
 
     @GetMapping("/messages")
     public Response getMessages(){
-        return new Response("SUCCESS","성공", chatMessageList);
+        return new Response("SUCCESS","성공", new MessageResponse(chatMessageList, chatMessageList.size()));
     }
 
 }
