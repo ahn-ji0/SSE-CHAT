@@ -8,20 +8,27 @@ import com.sse.ssechat.domain.WriteMessageRequest;
 import com.sse.ssechat.domain.WriteMessageResponse;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/chat")
 public class ChatController {
 
     private List<ChatMessage> chatMessageList = new ArrayList<>();
 
+    @GetMapping("/room")
+    public String showRoom(){
+        return "chat/room";
+    }
 
     @PostMapping("/writeMessage")
+    @ResponseBody
     public Response writeMessage(@RequestBody WriteMessageRequest writeMessageRequest){
         ChatMessage message = new ChatMessage(writeMessageRequest.authorName(), writeMessageRequest.content());
 
@@ -31,6 +38,7 @@ public class ChatController {
     }
 
     @GetMapping("/messages")
+    @ResponseBody
     public Response getMessages(MessageRequest messageRequest){
         int index;
         if(messageRequest.fromId() < 1){
