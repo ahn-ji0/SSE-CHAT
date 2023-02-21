@@ -2,6 +2,7 @@ package com.sse.ssechat.controller;
 
 import com.sse.ssechat.domain.ChatMessage;
 import com.sse.ssechat.Response;
+import com.sse.ssechat.domain.MessageRequest;
 import com.sse.ssechat.domain.MessageResponse;
 import com.sse.ssechat.domain.WriteMessageRequest;
 import com.sse.ssechat.domain.WriteMessageResponse;
@@ -20,7 +21,6 @@ public class ChatController {
     private List<ChatMessage> chatMessageList = new ArrayList<>();
 
 
-
     @PostMapping("/writeMessage")
     public Response writeMessage(@RequestBody WriteMessageRequest writeMessageRequest){
         ChatMessage message = new ChatMessage(writeMessageRequest.authorName(), writeMessageRequest.content());
@@ -31,8 +31,20 @@ public class ChatController {
     }
 
     @GetMapping("/messages")
-    public Response getMessages(){
-        return new Response("SUCCESS","성공", new MessageResponse(chatMessageList, chatMessageList.size()));
+    public Response getMessages(MessageRequest messageRequest){
+        int index;
+        if(messageRequest.fromId() < 1){
+            index = 0;
+        }
+        else if(messageRequest.fromId() > chatMessageList.size()) {
+            index = chatMessageList.size();
+        }
+        else{
+            index = (int)messageRequest.fromId() - 1;
+        }
+        List<ChatMessage> subList = chatMessageList.subList(index, chatMessageList.size());
+        return new Response("SUCCESS","성공", new MessageResponse(subList, subList.size()));
+
     }
 
 }
