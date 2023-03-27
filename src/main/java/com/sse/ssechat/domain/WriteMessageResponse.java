@@ -1,5 +1,10 @@
 package com.sse.ssechat.domain;
 
-public record WriteMessageResponse(long id) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
+public class WriteMessageResponse {
+    private final long id;
 }

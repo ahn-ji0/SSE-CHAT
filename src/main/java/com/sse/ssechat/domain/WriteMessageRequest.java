@@ -1,5 +1,11 @@
 package com.sse.ssechat.domain;
 
-public record WriteMessageRequest(String authorName, String content) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
+public class WriteMessageRequest{
+    private final String authorName;
+    private final String content;
 }

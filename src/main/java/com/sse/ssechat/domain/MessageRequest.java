@@ -1,5 +1,10 @@
 package com.sse.ssechat.domain;
 
-public record MessageRequest(long fromId) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
+public class MessageRequest{
+    private long fromId;
 }

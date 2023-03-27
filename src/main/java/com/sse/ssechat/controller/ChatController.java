@@ -34,7 +34,7 @@ public class ChatController {
     @PostMapping("/writeMessage")
     @ResponseBody
     public Response writeMessage(@RequestBody WriteMessageRequest writeMessageRequest){
-        ChatMessage message = new ChatMessage(writeMessageRequest.authorName(), writeMessageRequest.content());
+        ChatMessage message = new ChatMessage(writeMessageRequest.getAuthorName(), writeMessageRequest.getContent());
 
         chatMessageList.add(message);
 
@@ -47,14 +47,14 @@ public class ChatController {
     @ResponseBody
     public Response getMessages(MessageRequest messageRequest){
         int index;
-        if(messageRequest.fromId() < 1){
+        if(messageRequest.getFromId() < 1){
             index = 0;
         }
-        else if(messageRequest.fromId() > chatMessageList.size()) {
+        else if(messageRequest.getFromId() > chatMessageList.size()) {
             index = chatMessageList.size();
         }
         else{
-            index = (int)messageRequest.fromId() - 1;
+            index = (int)messageRequest.getFromId() - 1;
         }
         List<ChatMessage> subList = chatMessageList.subList(index, chatMessageList.size());
         return new Response("SUCCESS","성공", new MessageResponse(subList, subList.size()));
